@@ -117,6 +117,11 @@ GEM
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
+    factory_bot (6.5.4)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.5.0)
+      factory_bot (~> 6.5)
+      railties (>= 6.1.0)
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -363,6 +368,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   devise-jwt (~> 0.12.1)
+  factory_bot_rails (~> 6.5)
   kamal
   pg (~> 1.1)
   puma (>= 5.0)
