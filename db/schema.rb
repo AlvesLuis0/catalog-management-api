@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_13_142540) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_13_231341) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.bigint "owner_id", null: false
+    t.string "name", limit: 60, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_categories_on_owner_id"
+  end
 
   create_table "jwt_denylist", force: :cascade do |t|
     t.string "jti", null: false
@@ -45,4 +53,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_13_142540) do
     t.index ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_owners_on_unlock_token", unique: true
   end
+
+  add_foreign_key "categories", "owners"
 end

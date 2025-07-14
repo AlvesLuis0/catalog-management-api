@@ -6,4 +6,6 @@ class Owner < ApplicationRecord
          :confirmable, :lockable, :timeoutable,
          :trackable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenyList
+
+  has_many :categories, dependent: :destroy
 end
