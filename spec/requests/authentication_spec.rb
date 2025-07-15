@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Owner Authentication', type: :request do
+RSpec.describe '/auth', type: :request do
   let(:owner) { FactoryBot.create(:owner, password: 'password123', password_confirmation: 'password123') }
 
   describe 'POST /auth/login' do
