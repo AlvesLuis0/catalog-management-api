@@ -14,7 +14,7 @@ require 'rails_helper'
 
 RSpec.describe "/categories", type: :request do
   before(:all) do
-    @owner = FactoryBot.create(:owner, email: "categories@test.com")
+    @owner, @headers = create_auth(email: "categories@test.com", password: "Categories@123")
   end
 
   after(:all) do
@@ -24,28 +24,20 @@ RSpec.describe "/categories", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Category. As you add validations to Category, be sure to
   # adjust the attributes here as well.
-  let(:category) { FactoryBot.create(:category) }
-  let(:valid_attributes) { FactoryBot.attributes_for(:category) }
-  let(:invalid_attributes) { FactoryBot.attributes_for(:category, name: nil) }
-
-  # This should return the minimal set of values that should be in the headers
-  # in order to pass any filters (e.g. authentication) defined in
-  # CategoriesController, or in your router and rack
-  # middleware. Be sure to keep this updated too.
-  let(:valid_headers) {
-    Devise::JWT::TestHelpers.auth_headers({ 'Accept' => 'application/json', 'Content-Type' => 'application/json' }, @owner)
-  }
+  let(:valid_attributes) { FactoryBot.attributes_for(:category, owner: nil) }
+  let(:invalid_attributes) { FactoryBot.attributes_for(:category, name: nil, owner: nil) }
+  let!(:category) { @owner.categories.create!(valid_attributes) }
 
   describe "GET /index" do
     it "renders a successful response" do
-      get categories_url, headers: valid_headers, as: :json
+      get categories_url, headers: @headers, as: :json
       expect(response).to be_successful
     end
   end
 
   describe "GET /show" do
     it "renders a successful response" do
-      get category_url(category), as: :json
+      get category_url(category), headers: @headers, as: :json
       expect(response).to be_successful
     end
   end
@@ -55,13 +47,13 @@ RSpec.describe "/categories", type: :request do
       it "creates a new Category" do
         expect {
           post categories_url,
-               params: { category: valid_attributes }, headers: valid_headers, as: :json
+               params: { category: valid_attributes }, headers: @headers, as: :json
         }.to change(Category, :count).by(1)
       end
 
       it "renders a JSON response with the new category" do
         post categories_url,
-             params: { category: valid_attributes }, headers: valid_headers, as: :json
+             params: { category: valid_attributes }, headers: @headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -71,13 +63,13 @@ RSpec.describe "/categories", type: :request do
       it "does not create a new Category" do
         expect {
           post categories_url,
-               params: { category: invalid_attributes }, as: :json
+               params: { category: invalid_attributes }, headers: @headers, as: :json
         }.to change(Category, :count).by(0)
       end
 
       it "renders a JSON response with errors for the new category" do
         post categories_url,
-             params: { category: invalid_attributes }, headers: valid_headers, as: :json
+             params: { category: invalid_attributes }, headers: @headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -90,14 +82,14 @@ RSpec.describe "/categories", type: :request do
 
       it "updates the requested category" do
         patch category_url(category),
-              params: { category: new_attributes }, headers: valid_headers, as: :json
+              params: { category: new_attributes }, headers: @headers, as: :json
         category.reload
         expect(category.name).to eq(new_attributes[:name])
       end
 
       it "renders a JSON response with the category" do
         patch category_url(category),
-              params: { category: new_attributes }, headers: valid_headers, as: :json
+              params: { category: new_attributes }, headers: @headers, as: :json
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -106,7 +98,7 @@ RSpec.describe "/categories", type: :request do
     context "with invalid parameters" do
       it "renders a JSON response with errors for the category" do
         patch category_url(category),
-              params: { category: invalid_attributes }, headers: valid_headers, as: :json
+              params: { category: invalid_attributes }, headers: @headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -116,7 +108,7 @@ RSpec.describe "/categories", type: :request do
   describe "DELETE /destroy" do
     it "destroys the requested category" do
       expect {
-        delete category_url(category), headers: valid_headers, as: :json
+        delete category_url(category), headers: @headers, as: :json
       }.to change(Category, :count).by(-1)
     end
   end
