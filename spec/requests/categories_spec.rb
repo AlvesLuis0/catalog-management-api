@@ -26,7 +26,7 @@ RSpec.describe "/categories", type: :request do
   # adjust the attributes here as well.
   let(:valid_attributes) { FactoryBot.attributes_for(:category, owner: nil) }
   let(:invalid_attributes) { FactoryBot.attributes_for(:category, name: nil, owner: nil) }
-  let!(:category) { @owner.categories.create!(valid_attributes) }
+  let(:category) { @owner.categories.create!(valid_attributes) }
 
   describe "GET /index" do
     it "renders a successful response" do
@@ -78,13 +78,13 @@ RSpec.describe "/categories", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:new_attributes) { { name: "My category updated" } }
+      let(:new_attributes) { { description: "My simple description" } }
 
       it "updates the requested category" do
         patch category_url(category),
               params: { category: new_attributes }, headers: @headers, as: :json
         category.reload
-        expect(category.name).to eq(new_attributes[:name])
+        expect(category.description).to eq(new_attributes[:description])
       end
 
       it "renders a JSON response with the category" do
@@ -107,6 +107,7 @@ RSpec.describe "/categories", type: :request do
 
   describe "DELETE /destroy" do
     it "destroys the requested category" do
+      category # to create a category before the block
       expect {
         delete category_url(category), headers: @headers, as: :json
       }.to change(Category, :count).by(-1)
