@@ -16,7 +16,7 @@ module AuthenticationHelper
       'Content-Type' => 'application/json'
     }
 
-    [resource, headers]
+    [ resource, headers ]
   end
 end
 
