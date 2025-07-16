@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :category do
     association :owner
-    name { "My category" }
+    title { "My category" }
   end
 end

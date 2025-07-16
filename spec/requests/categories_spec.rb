@@ -25,7 +25,7 @@ RSpec.describe "/categories", type: :request do
   # Category. As you add validations to Category, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) { FactoryBot.attributes_for(:category, owner: nil) }
-  let(:invalid_attributes) { FactoryBot.attributes_for(:category, name: nil, owner: nil) }
+  let(:invalid_attributes) { FactoryBot.attributes_for(:category, title: nil, owner: nil) }
   let(:category) { @owner.categories.create!(valid_attributes) }
 
   describe "GET /index" do
