@@ -8,4 +8,5 @@ class Owner < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenyList
 
   has_many :categories, dependent: :destroy
+  has_many :products, through: :categories, dependent: :destroy
 end

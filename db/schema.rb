@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_16_230426) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_16_232409) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -55,5 +55,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_16_230426) do
     t.index ["unlock_token"], name: "index_owners_on_unlock_token", unique: true
   end
 
+  create_table "products", force: :cascade do |t|
+    t.string "title", limit: 60, null: false
+    t.text "description"
+    t.decimal "price", precision: 14, scale: 2, null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_products_on_category_id"
+  end
+
   add_foreign_key "categories", "owners"
+  add_foreign_key "products", "categories"
 end
