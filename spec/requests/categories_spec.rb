@@ -26,7 +26,7 @@ RSpec.describe "/categories", type: :request do
   # adjust the attributes here as well.
   let(:valid_attributes) { FactoryBot.attributes_for(:category, owner: nil) }
   let(:invalid_attributes) { FactoryBot.attributes_for(:category, title: nil, owner: nil) }
-  let(:category) { @owner.categories.create!(valid_attributes) }
+  let(:category) { FactoryBot.create(:category, owner: @owner) }
 
   describe "GET /index" do
     it "renders a successful response" do

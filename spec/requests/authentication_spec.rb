@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe '/auth', type: :request do
-  let(:owner) { FactoryBot.create(:owner, password: 'password123', password_confirmation: 'password123') }
+  let(:owner) { FactoryBot.create(:owner) }
+  let(:valid_attributes) { { email: owner.email, password: owner.password } }
 
   describe 'POST /auth/login' do
     context 'with valid credentials' do
       it 'returns JWT token and 201 code' do
-        post '/auth/login', params: {
-          owner: { email: owner.email, password: 'password123' }
-        }
+        post '/auth/login', params: { owner: valid_attributes }
 
         expect(response).to have_http_status(:created)
         expect(response.headers['Authorization']).to be_present
@@ -19,9 +18,7 @@ RSpec.describe '/auth', type: :request do
 
     context 'with invalid credentials' do
       it 'returns 401 code' do
-        post '/auth/login', params: {
-          owner: { email: owner.email, password: 'wrongpass' }
-        }
+        post '/auth/login', params: { owner: valid_attributes.merge(password: 'wrongpassword') }
 
         expect(response).to have_http_status(:unauthorized)
         expect(response.headers['Authorization']).to be_nil
@@ -33,14 +30,10 @@ RSpec.describe '/auth', type: :request do
   describe 'DELETE /auth/logout' do
     context 'with valid token' do
       it 'invalidate token and returns 204' do
-        post '/auth/login', params: {
-          owner: { email: owner.email, password: 'password123' }
-        }
+        post '/auth/login', params: { owner: valid_attributes }
         token = response.headers['Authorization'].split.last
 
-        delete '/auth/logout', headers: {
-          'Authorization' => "Bearer #{token}"
-        }
+        delete '/auth/logout', headers: { 'Authorization' => "Bearer #{token}" }
 
         expect(response).to have_http_status(:no_content)
       end
@@ -54,9 +47,7 @@ RSpec.describe '/auth', type: :request do
     end
 
     it 'returns 200 with valid token' do
-      post '/auth/login', params: {
-        owner: { email: owner.email, password: 'password123' }
-      }
+      post '/auth/login', params: { owner: valid_attributes }
       token = response.headers['Authorization'].split.last
 
       get '/up', headers: { 'Authorization' => "Bearer #{token}" }
