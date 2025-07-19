@@ -9,4 +9,6 @@ class Owner < ApplicationRecord
 
   has_many :categories, dependent: :destroy
   has_many :products, through: :categories, dependent: :destroy
+
+  validates :name, presence: true, length: { maximum: 60 }
 end
