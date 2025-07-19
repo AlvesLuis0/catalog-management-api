@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     devise_for :owners, path: "auth", path_names: { sign_in: "login", sign_out: "logout", registration: "signup" }
     resources :categories
     resources :products
-    get "catalog/:owner_id", to: "catalog#show"
+    get "catalog/:owner_id", to: "catalog#show", as: :catalog
     # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
     # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
