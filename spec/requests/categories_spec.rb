@@ -12,7 +12,7 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/categories", type: :request do
+RSpec.describe "/categories", type: :request, openapi: { security: [{"BearerToken" => []}] } do
   before(:all) do
     @owner, @headers = create_auth(email: "categories@test.com", password: "Categories@123")
   end

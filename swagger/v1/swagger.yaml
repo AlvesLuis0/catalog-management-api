@@ -1,0 +1,650 @@
+---
+openapi: 3.0.3
+info:
+  title: Catalog Manager API Documentation
+  version: 1.0.0
+servers: []
+paths:
+  "/auth/login":
+    post:
+      summary: create
+      tags:
+      - Devise::Session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                owner:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                  required:
+                  - email
+                  - password
+              required:
+              - owner
+            example:
+              owner:
+                email: owner1@example.com
+                password: password123
+      responses:
+        '201':
+          description: returns JWT token and 201 code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  name:
+                    type: string
+                required:
+                - id
+                - email
+                - created_at
+                - updated_at
+                - name
+              example:
+                id: 225
+                email: owner1@example.com
+                created_at: '2025-07-20T19:38:20.732Z'
+                updated_at: '2025-07-20T19:38:20.811Z'
+                name: Owner 1
+  "/auth/logout":
+    delete:
+      summary: destroy
+      tags:
+      - Devise::Session
+      responses:
+        '204':
+          description: invalidate token and returns 204
+      security:
+      - BearerToken: []
+  "/catalog/{owner_id}":
+    get:
+      summary: show
+      tags:
+      - Catalog
+      security:
+      - JWT: []
+      parameters:
+      - name: owner_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 229
+      responses:
+        '200':
+          description: renders a successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                        description:
+                          nullable: true
+                        products:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              title:
+                                type: string
+                              description:
+                                nullable: true
+                              price:
+                                type: string
+                            required:
+                            - id
+                            - title
+                            - description
+                            - price
+                      required:
+                      - id
+                      - title
+                      - description
+                      - products
+                required:
+                - id
+                - name
+                - categories
+              example:
+                id: 229
+                name: Owner 5
+                categories:
+                - id: 287
+                  title: My category
+                  description:
+                  products:
+                  - id: 255
+                    title: My product
+                    description:
+                    price: '9.99'
+  "/categories":
+    get:
+      summary: index
+      tags:
+      - Category
+      security:
+      - BearerToken: []
+      responses:
+        '200':
+          description: renders a successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              example: []
+    post:
+      summary: create
+      tags:
+      - Category
+      security:
+      - BearerToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                  required:
+                  - title
+              required:
+              - category
+            example:
+              category:
+                title: My category
+      responses:
+        '201':
+          description: renders a JSON response with the new category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  owner_id:
+                    type: integer
+                  title:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  description:
+                    nullable: true
+                required:
+                - id
+                - owner_id
+                - title
+                - created_at
+                - updated_at
+                - description
+              example:
+                id: 290
+                owner_id: 230
+                title: My category
+                created_at: '2025-07-20T19:38:21.147Z'
+                updated_at: '2025-07-20T19:38:21.147Z'
+                description:
+        '422':
+          description: renders a JSON response with errors for the new category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - title
+              example:
+                title:
+                - can't be blank
+  "/categories/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - Category
+      security:
+      - BearerToken: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 294
+      responses:
+        '204':
+          description: destroys the requested category
+    get:
+      summary: show
+      tags:
+      - Category
+      security:
+      - BearerToken: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 288
+      responses:
+        '200':
+          description: renders a successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  owner_id:
+                    type: integer
+                  title:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  description:
+                    nullable: true
+                required:
+                - id
+                - owner_id
+                - title
+                - created_at
+                - updated_at
+                - description
+              example:
+                id: 288
+                owner_id: 230
+                title: My category
+                created_at: '2025-07-20T19:38:21.107Z'
+                updated_at: '2025-07-20T19:38:21.107Z'
+                description:
+    patch:
+      summary: update
+      tags:
+      - Category
+      security:
+      - BearerToken: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 293
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: object
+                  properties:
+                    description:
+                      type: string
+                  required:
+                  - description
+              required:
+              - category
+            example:
+              category:
+                description: My simple description
+      responses:
+        '200':
+          description: renders a JSON response with the category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  owner_id:
+                    type: integer
+                  description:
+                    type: string
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                required:
+                - owner_id
+                - description
+                - id
+                - title
+                - created_at
+                - updated_at
+              example:
+                owner_id: 230
+                description: My simple description
+                id: 292
+                title: My category
+                created_at: '2025-07-20T19:38:21.194Z'
+                updated_at: '2025-07-20T19:38:21.202Z'
+        '422':
+          description: renders a JSON response with errors for the category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - title
+              example:
+                title:
+                - can't be blank
+  "/products":
+    get:
+      summary: index
+      tags:
+      - Product
+      responses:
+        '200':
+          description: renders a successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              example: []
+      security:
+      - BearerToken: []
+    post:
+      summary: create
+      tags:
+      - Product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                price:
+                  type: number
+                  format: float
+                category_id:
+                  type: integer
+              required:
+              - title
+              - price
+              - category_id
+            example:
+              title: My product
+              price: 9.99
+              category_id: 295
+      responses:
+        '201':
+          description: renders a JSON response with the new product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  description:
+                    nullable: true
+                  price:
+                    type: string
+                  category_id:
+                    type: integer
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                required:
+                - id
+                - title
+                - description
+                - price
+                - category_id
+                - created_at
+                - updated_at
+              example:
+                id: 258
+                title: My product
+                description:
+                price: '9.99'
+                category_id: 295
+                created_at: '2025-07-20T19:38:21.318Z'
+                updated_at: '2025-07-20T19:38:21.318Z'
+        '422':
+          description: renders a JSON response with errors for the new product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  price:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - price
+              example:
+                price:
+                - must be greater than 0
+      security:
+      - BearerToken: []
+  "/products/{id}":
+    delete:
+      summary: destroy
+      tags:
+      - Product
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 262
+      responses:
+        '204':
+          description: destroys the requested product
+      security:
+      - BearerToken: []
+    get:
+      summary: show
+      tags:
+      - Product
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 256
+      responses:
+        '200':
+          description: renders a successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  description:
+                    nullable: true
+                  price:
+                    type: string
+                  category_id:
+                    type: integer
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                required:
+                - id
+                - title
+                - description
+                - price
+                - category_id
+                - created_at
+                - updated_at
+              example:
+                id: 256
+                title: My product
+                description:
+                price: '9.99'
+                category_id: 295
+                created_at: '2025-07-20T19:38:21.279Z'
+                updated_at: '2025-07-20T19:38:21.279Z'
+      security:
+      - BearerToken: []
+    patch:
+      summary: update
+      tags:
+      - Product
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 261
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                price:
+                  type: number
+                  format: float
+              required:
+              - price
+            example:
+              price: 909.9
+      responses:
+        '200':
+          description: renders a JSON response with the product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  price:
+                    type: string
+                  category_id:
+                    type: integer
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  description:
+                    nullable: true
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                required:
+                - price
+                - category_id
+                - id
+                - title
+                - description
+                - created_at
+                - updated_at
+              example:
+                price: '909.9'
+                category_id: 295
+                id: 260
+                title: My product
+                description:
+                created_at: '2025-07-20T19:38:21.371Z'
+                updated_at: '2025-07-20T19:38:21.379Z'
+        '422':
+          description: renders a JSON response with errors for the product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  price:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - price
+              example:
+                price:
+                - must be greater than 0
+      security:
+      - BearerToken: []
+  "/up":
+    get:
+      summary: show
+      tags:
+      - Rails::Health
+      responses:
+        '200':
+          description: returns 200 with valid token
+          content:
+            text/html:
+              schema:
+                type: string
+              example: '<!DOCTYPE html><html><body style="background-color: green"></body></html>'
+components:
+  securitySchemes:
+    BearerToken:
+      description: Authenticate API requests via a JWT
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

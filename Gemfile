@@ -39,6 +39,10 @@ gem "devise", "~> 4.9"
 
 gem "devise-jwt", "~> 0.12.1"
 
+gem "rswag-api", "~> 2.16"
+
+gem "rswag-ui", "~> 2.16"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -52,4 +56,6 @@ group :development, :test do
   gem "rspec-rails", "~> 8.0"
 
   gem "factory_bot_rails", "~> 6.5"
+
+  gem "rspec-openapi", "~> 0.19.0"
 end

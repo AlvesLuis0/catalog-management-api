@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
+
   defaults format: :json do
     devise_for :owners, path: "auth", path_names: { sign_in: "login", sign_out: "logout", registration: "signup" }
     resources :categories

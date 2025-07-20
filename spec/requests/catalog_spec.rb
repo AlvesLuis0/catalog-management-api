@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "/catalog", type: :request do
+RSpec.describe "/catalog", type: :request, openapi: { security: [{"JWT" => []}] } do
   before(:all) do
     @owner, @headers = create_auth(email: "catalog@test.com", password: "Catalog@123")
     @category = FactoryBot.create(:category, owner: @owner)
