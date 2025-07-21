@@ -1,24 +1,80 @@
-# README
+# Catalog Manager API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Catalog Manager is a backend service designed to manage catalogs, categories, and products for e-commerce applications. Authentication is handled via JWT tokens. This project uses Rails and is fully documented via Swagger (OpenAPI 3.0.3).
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+* JWT-based authentication
+* Catalog retrieval by owner
+* CRUD operations for categories and products
+* Health check endpoint
+* API documentation via Swagger
 
-* System dependencies
+## Getting Started
 
-* Configuration
+### Requirements
 
-* Database creation
+* Ruby 3.4.2
+* Rails 8.0.2
+* PostgreSQL 17.5
 
-* Database initialization
+### Setup Instructions
 
-* How to run the test suite
+1. **Clone the repository**
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+git clone https://github.com/your-org/catalog-manager-api.git
+cd catalog-manager-api
+```
 
-* Deployment instructions
+2. **Install dependencies**
 
-* ...
+```bash
+bundle install
+```
+
+3. **Database setup**
+
+```bash
+rails db:prepare
+```
+
+4. **Environment variables**
+   Set up the following environment variables:
+
+* `RAILS_MASTER_KEY`
+* `DATABASE_HOST (default 'localhost')`
+* `DATABASE_PORT (default '5432')`
+* `DATABASE_USERNAME (default 'postgres')`
+* `DATABASE_PASSWORD (default 'password')`
+
+5. **Run the server**
+
+```bash
+rails server
+```
+
+6. **Access API documentation**
+   Swagger documentation is available at `/api-docs`.
+
+### Running Tests
+
+```bash
+rails spec
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to your fork
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+API request/response details are available in the [Swagger Documentation](./swagger/v1/swagger.yaml).
