@@ -12,7 +12,7 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/products", type: :request, openapi: { security: [{"BearerToken" => []}] } do
+RSpec.describe "/products", type: :request, openapi: { security: [ { "BearerToken" => [] } ] } do
   before(:all) do
     @owner, @headers = create_auth(email: "products@test.com", password: "Products@123")
     @category = FactoryBot.create(:category, owner: @owner)

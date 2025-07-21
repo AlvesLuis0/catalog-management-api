@@ -23,15 +23,19 @@ paths:
                       type: string
                     password:
                       type: string
+                    name:
+                      type: string
                   required:
                   - email
                   - password
+                  - name
               required:
               - owner
             example:
               owner:
-                email: owner1@example.com
+                email: owner5@example.com
                 password: password123
+                name: Owner 5
       responses:
         '201':
           description: returns JWT token and 201 code
@@ -57,21 +61,116 @@ paths:
                 - updated_at
                 - name
               example:
-                id: 225
-                email: owner1@example.com
-                created_at: '2025-07-20T19:38:20.732Z'
-                updated_at: '2025-07-20T19:38:20.811Z'
-                name: Owner 1
+                id: 83
+                email: owner5@example.com
+                created_at: '2025-07-21T21:48:55.805Z'
+                updated_at: '2025-07-21T21:48:55.825Z'
+                name: Owner 5
   "/auth/logout":
     delete:
       summary: destroy
       tags:
       - Devise::Session
+      security:
+      - BearerToken: []
       responses:
         '204':
           description: invalidate token and returns 204
-      security:
-      - BearerToken: []
+  "/auth/signup":
+    post:
+      summary: create
+      tags:
+      - Devise::Registration
+      responses:
+        '201':
+          description: renders a JSON response with the new owner
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  name:
+                    type: string
+                required:
+                - id
+                - email
+                - created_at
+                - updated_at
+                - name
+              example:
+                id: 80
+                email: new.owner@test.com
+                created_at: '2025-07-21T21:48:55.742Z'
+                updated_at: '2025-07-21T21:48:55.742Z'
+                name: Owner 2
+        '422':
+          description: renders a JSON response with errors for the new owner
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    properties:
+                      email:
+                        type: array
+                        items:
+                          type: string
+                      name:
+                        type: array
+                        items:
+                          type: string
+                      password:
+                        type: array
+                        items:
+                          type: string
+                    required:
+                    - email
+                required:
+                - errors
+              example:
+                errors:
+                  email:
+                  - can't be blank
+                  name:
+                  - can't be blank
+                  password:
+                  - can't be blank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                owner:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                    name:
+                      type: string
+                  required:
+                  - email
+                  - password
+                  - name
+              required:
+              - owner
+            example:
+              owner:
+                email: new.owner@test.com
+                password: password123
+                name: Owner 2
   "/catalog/{owner_id}":
     get:
       summary: show
@@ -85,7 +184,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 229
+        example: 87
       responses:
         '200':
           description: renders a successful response
@@ -137,14 +236,14 @@ paths:
                 - name
                 - categories
               example:
-                id: 229
-                name: Owner 5
+                id: 87
+                name: Owner 9
                 categories:
-                - id: 287
+                - id: 64
                   title: My category
                   description:
                   products:
-                  - id: 255
+                  - id: 57
                     title: My product
                     description:
                     price: '9.99'
@@ -216,11 +315,11 @@ paths:
                 - updated_at
                 - description
               example:
-                id: 290
-                owner_id: 230
+                id: 67
+                owner_id: 88
                 title: My category
-                created_at: '2025-07-20T19:38:21.147Z'
-                updated_at: '2025-07-20T19:38:21.147Z'
+                created_at: '2025-07-21T21:48:56.134Z'
+                updated_at: '2025-07-21T21:48:56.134Z'
                 description:
         '422':
           description: renders a JSON response with errors for the new category
@@ -251,7 +350,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 294
+        example: 71
       responses:
         '204':
           description: destroys the requested category
@@ -267,7 +366,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 288
+        example: 65
       responses:
         '200':
           description: renders a successful response
@@ -296,11 +395,11 @@ paths:
                 - updated_at
                 - description
               example:
-                id: 288
-                owner_id: 230
+                id: 65
+                owner_id: 88
                 title: My category
-                created_at: '2025-07-20T19:38:21.107Z'
-                updated_at: '2025-07-20T19:38:21.107Z'
+                created_at: '2025-07-21T21:48:56.093Z'
+                updated_at: '2025-07-21T21:48:56.093Z'
                 description:
     patch:
       summary: update
@@ -314,7 +413,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 293
+        example: 70
       requestBody:
         content:
           application/json:
@@ -361,12 +460,12 @@ paths:
                 - created_at
                 - updated_at
               example:
-                owner_id: 230
+                owner_id: 88
                 description: My simple description
-                id: 292
+                id: 69
                 title: My category
-                created_at: '2025-07-20T19:38:21.194Z'
-                updated_at: '2025-07-20T19:38:21.202Z'
+                created_at: '2025-07-21T21:48:56.190Z'
+                updated_at: '2025-07-21T21:48:56.197Z'
         '422':
           description: renders a JSON response with errors for the category
           content:
@@ -388,6 +487,8 @@ paths:
       summary: index
       tags:
       - Product
+      security:
+      - BearerToken: []
       responses:
         '200':
           description: renders a successful response
@@ -397,12 +498,12 @@ paths:
                 type: array
                 items: {}
               example: []
-      security:
-      - BearerToken: []
     post:
       summary: create
       tags:
       - Product
+      security:
+      - BearerToken: []
       requestBody:
         content:
           application/json:
@@ -423,7 +524,7 @@ paths:
             example:
               title: My product
               price: 9.99
-              category_id: 295
+              category_id: 72
       responses:
         '201':
           description: renders a JSON response with the new product
@@ -455,13 +556,13 @@ paths:
                 - created_at
                 - updated_at
               example:
-                id: 258
+                id: 60
                 title: My product
                 description:
                 price: '9.99'
-                category_id: 295
-                created_at: '2025-07-20T19:38:21.318Z'
-                updated_at: '2025-07-20T19:38:21.318Z'
+                category_id: 72
+                created_at: '2025-07-21T21:48:56.317Z'
+                updated_at: '2025-07-21T21:48:56.317Z'
         '422':
           description: renders a JSON response with errors for the new product
           content:
@@ -478,36 +579,36 @@ paths:
               example:
                 price:
                 - must be greater than 0
-      security:
-      - BearerToken: []
   "/products/{id}":
     delete:
       summary: destroy
       tags:
       - Product
+      security:
+      - BearerToken: []
       parameters:
       - name: id
         in: path
         required: true
         schema:
           type: integer
-        example: 262
+        example: 64
       responses:
         '204':
           description: destroys the requested product
-      security:
-      - BearerToken: []
     get:
       summary: show
       tags:
       - Product
+      security:
+      - BearerToken: []
       parameters:
       - name: id
         in: path
         required: true
         schema:
           type: integer
-        example: 256
+        example: 58
       responses:
         '200':
           description: renders a successful response
@@ -539,26 +640,26 @@ paths:
                 - created_at
                 - updated_at
               example:
-                id: 256
+                id: 58
                 title: My product
                 description:
                 price: '9.99'
-                category_id: 295
-                created_at: '2025-07-20T19:38:21.279Z'
-                updated_at: '2025-07-20T19:38:21.279Z'
-      security:
-      - BearerToken: []
+                category_id: 72
+                created_at: '2025-07-21T21:48:56.279Z'
+                updated_at: '2025-07-21T21:48:56.279Z'
     patch:
       summary: update
       tags:
       - Product
+      security:
+      - BearerToken: []
       parameters:
       - name: id
         in: path
         required: true
         schema:
           type: integer
-        example: 261
+        example: 63
       requestBody:
         content:
           application/json:
@@ -604,12 +705,12 @@ paths:
                 - updated_at
               example:
                 price: '909.9'
-                category_id: 295
-                id: 260
+                category_id: 72
+                id: 62
                 title: My product
                 description:
-                created_at: '2025-07-20T19:38:21.371Z'
-                updated_at: '2025-07-20T19:38:21.379Z'
+                created_at: '2025-07-21T21:48:56.373Z'
+                updated_at: '2025-07-21T21:48:56.384Z'
         '422':
           description: renders a JSON response with errors for the product
           content:
@@ -626,8 +727,6 @@ paths:
               example:
                 price:
                 - must be greater than 0
-      security:
-      - BearerToken: []
   "/up":
     get:
       summary: show
