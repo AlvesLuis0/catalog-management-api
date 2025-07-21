@@ -66,6 +66,8 @@ jobs:
         env:
           RAILS_ENV: test
           RAILS_MASTER_KEY: ${{secrets.RAILS_MASTER_KEY}}
+          POSTGRES_USERNAME: postgres
+          POSTGRES_PASSWORD: password
         run: bin/rails db:test:prepare spec
 
       - name: Keep screenshots from failed system tests
