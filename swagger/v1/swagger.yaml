@@ -23,19 +23,15 @@ paths:
                       type: string
                     password:
                       type: string
-                    name:
-                      type: string
                   required:
                   - email
                   - password
-                  - name
               required:
               - owner
             example:
               owner:
-                email: owner5@example.com
+                email: owner1@example.com
                 password: password123
-                name: Owner 5
       responses:
         '201':
           description: returns JWT token and 201 code
@@ -61,11 +57,11 @@ paths:
                 - updated_at
                 - name
               example:
-                id: 83
-                email: owner5@example.com
-                created_at: '2025-07-21T21:48:55.805Z'
-                updated_at: '2025-07-21T21:48:55.825Z'
-                name: Owner 5
+                id: 3
+                email: owner1@example.com
+                created_at: '2025-07-21T22:35:53.819Z'
+                updated_at: '2025-07-21T22:35:53.839Z'
+                name: Owner 1
   "/auth/logout":
     delete:
       summary: destroy
@@ -81,6 +77,32 @@ paths:
       summary: create
       tags:
       - Devise::Registration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                owner:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                    name:
+                      type: string
+                  required:
+                  - email
+                  - password
+                  - name
+              required:
+              - owner
+            example:
+              owner:
+                email: new.owner@email.com
+                password: password123
+                name: New Owner
       responses:
         '201':
           description: renders a JSON response with the new owner
@@ -106,11 +128,11 @@ paths:
                 - updated_at
                 - name
               example:
-                id: 80
-                email: new.owner@test.com
-                created_at: '2025-07-21T21:48:55.742Z'
-                updated_at: '2025-07-21T21:48:55.742Z'
-                name: Owner 2
+                id: 2
+                email: new.owner@email.com
+                created_at: '2025-07-21T22:35:53.787Z'
+                updated_at: '2025-07-21T22:35:53.787Z'
+                name: New Owner
         '422':
           description: renders a JSON response with errors for the new owner
           content:
@@ -121,11 +143,11 @@ paths:
                   errors:
                     type: object
                     properties:
-                      email:
+                      name:
                         type: array
                         items:
                           type: string
-                      name:
+                      email:
                         type: array
                         items:
                           type: string
@@ -134,43 +156,17 @@ paths:
                         items:
                           type: string
                     required:
-                    - email
+                    - name
                 required:
                 - errors
               example:
                 errors:
-                  email:
-                  - can't be blank
                   name:
+                  - can't be blank
+                  email:
                   - can't be blank
                   password:
                   - can't be blank
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                owner:
-                  type: object
-                  properties:
-                    email:
-                      type: string
-                    password:
-                      type: string
-                    name:
-                      type: string
-                  required:
-                  - email
-                  - password
-                  - name
-              required:
-              - owner
-            example:
-              owner:
-                email: new.owner@test.com
-                password: password123
-                name: Owner 2
   "/catalog/{owner_id}":
     get:
       summary: show
@@ -184,7 +180,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 87
+        example: 7
       responses:
         '200':
           description: renders a successful response
@@ -207,7 +203,7 @@ paths:
                         title:
                           type: string
                         description:
-                          nullable: true
+                          type: string
                         products:
                           type: array
                           items:
@@ -218,7 +214,7 @@ paths:
                               title:
                                 type: string
                               description:
-                                nullable: true
+                                type: string
                               price:
                                 type: string
                             required:
@@ -236,16 +232,16 @@ paths:
                 - name
                 - categories
               example:
-                id: 87
-                name: Owner 9
+                id: 7
+                name: Owner 5
                 categories:
-                - id: 64
+                - id: 1
                   title: My category
-                  description:
+                  description: My text
                   products:
-                  - id: 57
+                  - id: 1
                     title: My product
-                    description:
+                    description: My text
                     price: '9.99'
   "/categories":
     get:
@@ -280,13 +276,17 @@ paths:
                   properties:
                     title:
                       type: string
+                    description:
+                      type: string
                   required:
                   - title
+                  - description
               required:
               - category
             example:
               category:
                 title: My category
+                description: My text
       responses:
         '201':
           description: renders a JSON response with the new category
@@ -306,7 +306,7 @@ paths:
                   updated_at:
                     type: string
                   description:
-                    nullable: true
+                    type: string
                 required:
                 - id
                 - owner_id
@@ -315,12 +315,12 @@ paths:
                 - updated_at
                 - description
               example:
-                id: 67
-                owner_id: 88
+                id: 4
+                owner_id: 8
                 title: My category
-                created_at: '2025-07-21T21:48:56.134Z'
-                updated_at: '2025-07-21T21:48:56.134Z'
-                description:
+                created_at: '2025-07-21T22:35:54.167Z'
+                updated_at: '2025-07-21T22:35:54.167Z'
+                description: My text
         '422':
           description: renders a JSON response with errors for the new category
           content:
@@ -350,7 +350,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 71
+        example: 8
       responses:
         '204':
           description: destroys the requested category
@@ -366,7 +366,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 65
+        example: 2
       responses:
         '200':
           description: renders a successful response
@@ -386,7 +386,7 @@ paths:
                   updated_at:
                     type: string
                   description:
-                    nullable: true
+                    type: string
                 required:
                 - id
                 - owner_id
@@ -395,12 +395,12 @@ paths:
                 - updated_at
                 - description
               example:
-                id: 65
-                owner_id: 88
+                id: 2
+                owner_id: 8
                 title: My category
-                created_at: '2025-07-21T21:48:56.093Z'
-                updated_at: '2025-07-21T21:48:56.093Z'
-                description:
+                created_at: '2025-07-21T22:35:54.129Z'
+                updated_at: '2025-07-21T22:35:54.129Z'
+                description: My text
     patch:
       summary: update
       tags:
@@ -413,7 +413,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 70
+        example: 7
       requestBody:
         content:
           application/json:
@@ -460,12 +460,12 @@ paths:
                 - created_at
                 - updated_at
               example:
-                owner_id: 88
+                owner_id: 8
                 description: My simple description
-                id: 69
+                id: 6
                 title: My category
-                created_at: '2025-07-21T21:48:56.190Z'
-                updated_at: '2025-07-21T21:48:56.197Z'
+                created_at: '2025-07-21T22:35:54.213Z'
+                updated_at: '2025-07-21T22:35:54.222Z'
         '422':
           description: renders a JSON response with errors for the category
           content:
@@ -512,6 +512,8 @@ paths:
               properties:
                 title:
                   type: string
+                description:
+                  type: string
                 price:
                   type: number
                   format: float
@@ -519,12 +521,14 @@ paths:
                   type: integer
               required:
               - title
+              - description
               - price
               - category_id
             example:
               title: My product
+              description: My text
               price: 9.99
-              category_id: 72
+              category_id: 9
       responses:
         '201':
           description: renders a JSON response with the new product
@@ -538,7 +542,7 @@ paths:
                   title:
                     type: string
                   description:
-                    nullable: true
+                    type: string
                   price:
                     type: string
                   category_id:
@@ -556,13 +560,13 @@ paths:
                 - created_at
                 - updated_at
               example:
-                id: 60
+                id: 4
                 title: My product
-                description:
+                description: My text
                 price: '9.99'
-                category_id: 72
-                created_at: '2025-07-21T21:48:56.317Z'
-                updated_at: '2025-07-21T21:48:56.317Z'
+                category_id: 9
+                created_at: '2025-07-21T22:35:54.343Z'
+                updated_at: '2025-07-21T22:35:54.343Z'
         '422':
           description: renders a JSON response with errors for the new product
           content:
@@ -592,7 +596,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 64
+        example: 8
       responses:
         '204':
           description: destroys the requested product
@@ -608,7 +612,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 58
+        example: 2
       responses:
         '200':
           description: renders a successful response
@@ -622,7 +626,7 @@ paths:
                   title:
                     type: string
                   description:
-                    nullable: true
+                    type: string
                   price:
                     type: string
                   category_id:
@@ -640,13 +644,13 @@ paths:
                 - created_at
                 - updated_at
               example:
-                id: 58
+                id: 2
                 title: My product
-                description:
+                description: My text
                 price: '9.99'
-                category_id: 72
-                created_at: '2025-07-21T21:48:56.279Z'
-                updated_at: '2025-07-21T21:48:56.279Z'
+                category_id: 9
+                created_at: '2025-07-21T22:35:54.304Z'
+                updated_at: '2025-07-21T22:35:54.304Z'
     patch:
       summary: update
       tags:
@@ -659,7 +663,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 63
+        example: 7
       requestBody:
         content:
           application/json:
@@ -690,7 +694,7 @@ paths:
                   title:
                     type: string
                   description:
-                    nullable: true
+                    type: string
                   created_at:
                     type: string
                   updated_at:
@@ -705,12 +709,12 @@ paths:
                 - updated_at
               example:
                 price: '909.9'
-                category_id: 72
-                id: 62
+                category_id: 9
+                id: 6
                 title: My product
-                description:
-                created_at: '2025-07-21T21:48:56.373Z'
-                updated_at: '2025-07-21T21:48:56.384Z'
+                description: My text
+                created_at: '2025-07-21T22:35:54.395Z'
+                updated_at: '2025-07-21T22:35:54.404Z'
         '422':
           description: renders a JSON response with errors for the product
           content:

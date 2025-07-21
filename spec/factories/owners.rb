@@ -4,6 +4,6 @@ FactoryBot.define do
     sequence(:name) { |n| "Owner #{n}" }
     password { 'password123' }
     password_confirmation { 'password123' }
-    confirmed_at { Time.current } # para pular confirmação Devise
+    confirmed_at { Time.current }
   end
 end

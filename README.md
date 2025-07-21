@@ -43,10 +43,10 @@ rails db:prepare
    Set up the following environment variables:
 
 * `RAILS_MASTER_KEY`
-* `DATABASE_HOST (default 'localhost')`
-* `DATABASE_PORT (default '5432')`
-* `DATABASE_USERNAME (default 'postgres')`
-* `DATABASE_PASSWORD (default 'password')`
+* `POSTGRES_USERNAME`
+* `POSTGRES_PASSWORD`
+* `POSTGRES_HOST (default 'localhost')`
+* `POSTGRES_PORT (default '5432')`
 
 5. **Run the server**
 
