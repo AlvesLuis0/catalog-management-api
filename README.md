@@ -43,6 +43,7 @@ rails db:prepare
    Set up the following environment variables:
 
 * `RAILS_MASTER_KEY`
+* `JWT_SECRET_KEY`
 * `POSTGRES_USERNAME`
 * `POSTGRES_PASSWORD`
 * `POSTGRES_HOST (default 'localhost')`
