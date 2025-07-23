@@ -44,6 +44,8 @@ rails db:prepare
 
 * `RAILS_MASTER_KEY`
 * `JWT_SECRET_KEY`
+* `HOST (default 'localhost')`
+* `PORT (default '3000')`
 * `POSTGRES_USERNAME`
 * `POSTGRES_PASSWORD`
 * `POSTGRES_HOST (default 'localhost')`
