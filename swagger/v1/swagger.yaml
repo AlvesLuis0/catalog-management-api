@@ -1,7 +1,7 @@
 ---
 openapi: 3.0.3
 info:
-  title: Catalog Manager API Documentation
+  title: Catalog Management API Documentation
   version: 1.0.0
 servers: []
 paths:

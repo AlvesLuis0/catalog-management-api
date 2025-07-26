@@ -15,4 +15,4 @@ RSpec::OpenAPI.security_schemes = {
 RSpec::OpenAPI.application_version = '1.0.0'
 
 # Change the default title of the generated schema
-RSpec::OpenAPI.title = 'Catalog Manager API Documentation'
+RSpec::OpenAPI.title = 'Catalog Management API Documentation'

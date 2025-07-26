@@ -7,3 +7,10 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+
+  api:
+    container_name: api
+    image: alvesluis0/catalog-management-api:master
+    ports:
+      - "3000:3000"
+    env_file: .env

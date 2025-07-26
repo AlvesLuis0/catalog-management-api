@@ -1,6 +1,6 @@
-# Catalog Manager API
+# Catalog Management API
 
-Catalog Manager is a backend service designed to manage catalogs, categories, and products for e-commerce applications. Authentication is handled via JWT tokens. This project uses Rails and is fully documented via Swagger (OpenAPI 3.0.3).
+Catalog Management is a backend service designed to manage catalogs, categories, and products for e-commerce applications. Authentication is handled via JWT tokens. This project uses Rails and is fully documented via Swagger (OpenAPI 3.0.3).
 
 ## Features
 
@@ -23,8 +23,8 @@ Catalog Manager is a backend service designed to manage catalogs, categories, an
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/your-org/catalog-manager-api.git
-cd catalog-manager-api
+git clone https://github.com/your-org/catalog-management-api.git
+cd catalog-management-api
 ```
 
 2. **Install dependencies**
