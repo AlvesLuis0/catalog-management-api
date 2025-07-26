@@ -3,4 +3,6 @@ class Category < ApplicationRecord
   has_many :products, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: 60 }
+
+  after_save -> { UpdateCatalogService.call(owner_id) }
 end

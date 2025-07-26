@@ -11,4 +11,6 @@ class Owner < ApplicationRecord
   has_many :products, through: :categories, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 60 }
+
+  after_save -> { UpdateCatalogService.call(id) }
 end
