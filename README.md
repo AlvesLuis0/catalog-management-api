@@ -42,7 +42,7 @@ rails db:prepare
 4. **Environment variables**
    Set up the following environment variables:
 
-* `RAILS_MASTER_KEY`
+* `SECRET_KEY_BASE`
 * `JWT_SECRET_KEY`
 * `HOST (default 'localhost')`
 * `PORT (default '3000')`
@@ -50,6 +50,10 @@ rails db:prepare
 * `POSTGRES_PASSWORD`
 * `POSTGRES_HOST (default 'localhost')`
 * `POSTGRES_PORT (default '5432')`
+* `AWS_REGION`
+* `AWS_ACCESS_KEY_ID`
+* `AWS_SECRET_ACCESS_KEY`
+* `AWS_SNS_TOPIC_ARN`
 
 5. **Run the server**
 
