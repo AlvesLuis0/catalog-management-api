@@ -12,5 +12,12 @@ class Owner < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 60 }
 
-  after_save -> { UpdateCatalogService.call(id) }
+  after_create -> { UpdateCatalogService.call(id) }
+
+  def update(attributes)
+    super(attributes)
+    if attributes.has_key?(:name)
+      UpdateCatalogService.call(id)
+    end
+  end
 end
