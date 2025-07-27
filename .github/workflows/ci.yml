@@ -49,6 +49,11 @@ jobs:
         ports:
           - 5432:5432
 
+      redis:
+        image: redis:8.0.3-alpine3.21
+        ports:
+          - 6379:6379
+
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config google-chrome-stable
