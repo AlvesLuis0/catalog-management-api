@@ -54,6 +54,7 @@ rails db:prepare
 * `AWS_ACCESS_KEY_ID`
 * `AWS_SECRET_ACCESS_KEY`
 * `AWS_SNS_TOPIC_ARN`
+* `AWS_BUCKET_NAME`
 
 5. **Run the server**
 

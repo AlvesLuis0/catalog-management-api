@@ -59,8 +59,8 @@ paths:
               example:
                 id: 3
                 email: owner1@example.com
-                created_at: '2025-07-21T22:35:53.819Z'
-                updated_at: '2025-07-21T22:35:53.839Z'
+                created_at: '2025-07-27T18:22:57.511Z'
+                updated_at: '2025-07-27T18:22:57.529Z'
                 name: Owner 1
   "/auth/logout":
     delete:
@@ -130,8 +130,8 @@ paths:
               example:
                 id: 2
                 email: new.owner@email.com
-                created_at: '2025-07-21T22:35:53.787Z'
-                updated_at: '2025-07-21T22:35:53.787Z'
+                created_at: '2025-07-27T18:22:57.479Z'
+                updated_at: '2025-07-27T18:22:57.479Z'
                 name: New Owner
         '422':
           description: renders a JSON response with errors for the new owner
@@ -189,60 +189,10 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
-                    type: integer
-                  name:
+                  catalog_url:
                     type: string
-                  categories:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        title:
-                          type: string
-                        description:
-                          type: string
-                        products:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              id:
-                                type: integer
-                              title:
-                                type: string
-                              description:
-                                type: string
-                              price:
-                                type: string
-                            required:
-                            - id
-                            - title
-                            - description
-                            - price
-                      required:
-                      - id
-                      - title
-                      - description
-                      - products
-                required:
-                - id
-                - name
-                - categories
               example:
-                id: 7
-                name: Owner 5
-                categories:
-                - id: 1
-                  title: My category
-                  description: My text
-                  products:
-                  - id: 1
-                    title: My product
-                    description: My text
-                    price: '9.99'
+                catalog_url: https://catalog-management-api-b.s3.us-east-1.amazonaws.com/7-catalog.json
   "/categories":
     get:
       summary: index
@@ -315,11 +265,11 @@ paths:
                 - updated_at
                 - description
               example:
-                id: 4
+                id: 3
                 owner_id: 8
                 title: My category
-                created_at: '2025-07-21T22:35:54.167Z'
-                updated_at: '2025-07-21T22:35:54.167Z'
+                created_at: '2025-07-27T18:22:57.828Z'
+                updated_at: '2025-07-27T18:22:57.828Z'
                 description: My text
         '422':
           description: renders a JSON response with errors for the new category
@@ -350,7 +300,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 8
+        example: 7
       responses:
         '204':
           description: destroys the requested category
@@ -366,7 +316,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 2
+        example: 1
       responses:
         '200':
           description: renders a successful response
@@ -395,11 +345,11 @@ paths:
                 - updated_at
                 - description
               example:
-                id: 2
+                id: 1
                 owner_id: 8
                 title: My category
-                created_at: '2025-07-21T22:35:54.129Z'
-                updated_at: '2025-07-21T22:35:54.129Z'
+                created_at: '2025-07-27T18:22:57.777Z'
+                updated_at: '2025-07-27T18:22:57.777Z'
                 description: My text
     patch:
       summary: update
@@ -413,7 +363,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 7
+        example: 6
       requestBody:
         content:
           application/json:
@@ -462,10 +412,10 @@ paths:
               example:
                 owner_id: 8
                 description: My simple description
-                id: 6
+                id: 5
                 title: My category
-                created_at: '2025-07-21T22:35:54.213Z'
-                updated_at: '2025-07-21T22:35:54.222Z'
+                created_at: '2025-07-27T18:22:57.879Z'
+                updated_at: '2025-07-27T18:22:57.889Z'
         '422':
           description: renders a JSON response with errors for the category
           content:
@@ -528,7 +478,7 @@ paths:
               title: My product
               description: My text
               price: 9.99
-              category_id: 9
+              category_id: 8
       responses:
         '201':
           description: renders a JSON response with the new product
@@ -560,13 +510,13 @@ paths:
                 - created_at
                 - updated_at
               example:
-                id: 4
+                id: 3
                 title: My product
                 description: My text
                 price: '9.99'
-                category_id: 9
-                created_at: '2025-07-21T22:35:54.343Z'
-                updated_at: '2025-07-21T22:35:54.343Z'
+                category_id: 8
+                created_at: '2025-07-27T18:22:58.044Z'
+                updated_at: '2025-07-27T18:22:58.044Z'
         '422':
           description: renders a JSON response with errors for the new product
           content:
@@ -596,7 +546,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 8
+        example: 7
       responses:
         '204':
           description: destroys the requested product
@@ -612,7 +562,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 2
+        example: 1
       responses:
         '200':
           description: renders a successful response
@@ -644,13 +594,13 @@ paths:
                 - created_at
                 - updated_at
               example:
-                id: 2
+                id: 1
                 title: My product
                 description: My text
                 price: '9.99'
-                category_id: 9
-                created_at: '2025-07-21T22:35:54.304Z'
-                updated_at: '2025-07-21T22:35:54.304Z'
+                category_id: 8
+                created_at: '2025-07-27T18:22:57.994Z'
+                updated_at: '2025-07-27T18:22:57.994Z'
     patch:
       summary: update
       tags:
@@ -663,7 +613,7 @@ paths:
         required: true
         schema:
           type: integer
-        example: 7
+        example: 6
       requestBody:
         content:
           application/json:
@@ -709,12 +659,12 @@ paths:
                 - updated_at
               example:
                 price: '909.9'
-                category_id: 9
-                id: 6
+                category_id: 8
+                id: 5
                 title: My product
                 description: My text
-                created_at: '2025-07-21T22:35:54.395Z'
-                updated_at: '2025-07-21T22:35:54.404Z'
+                created_at: '2025-07-27T18:22:58.102Z'
+                updated_at: '2025-07-27T18:22:58.112Z'
         '422':
           description: renders a JSON response with errors for the product
           content:
