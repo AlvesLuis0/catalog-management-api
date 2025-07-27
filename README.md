@@ -10,6 +10,10 @@ Catalog Management is a backend service designed to manage catalogs, categories,
 * Health check endpoint
 * API documentation via Swagger
 
+## Diagram representing the final structure of the project
+
+![Catalog Management API Diagram](.github/images/diagram.png)
+
 ## Getting Started
 
 ### Requirements
@@ -17,6 +21,8 @@ Catalog Management is a backend service designed to manage catalogs, categories,
 * Ruby 3.4.2
 * Rails 8.0.2
 * PostgreSQL 17.5
+* Redis 8.0.3
+* AWS account
 
 ### Setup Instructions
 
@@ -44,17 +50,17 @@ rails db:prepare
 
 * `SECRET_KEY_BASE`
 * `JWT_SECRET_KEY`
+* `AWS_REGION`
+* `AWS_ACCESS_KEY_ID`
+* `AWS_SECRET_ACCESS_KEY`
+* `AWS_SNS_TOPIC_ARN`
+* `AWS_BUCKET_NAME`
 * `HOST (default 'localhost')`
 * `PORT (default '3000')`
 * `POSTGRES_USERNAME`
 * `POSTGRES_PASSWORD`
 * `POSTGRES_HOST (default 'localhost')`
 * `POSTGRES_PORT (default '5432')`
-* `AWS_REGION`
-* `AWS_ACCESS_KEY_ID`
-* `AWS_SECRET_ACCESS_KEY`
-* `AWS_SNS_TOPIC_ARN`
-* `AWS_BUCKET_NAME`
 
 5. **Run the server**
 
