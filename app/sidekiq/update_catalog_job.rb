@@ -1,7 +1,7 @@
-# frozen_string_literal: true
+class UpdateCatalogJob
+  include Sidekiq::Job
 
-class UpdateCatalogService
-  def self.call(owner_id)
+  def perform(owner_id)
     catalog = generate_catalog(owner_id)
     publish_catalog(catalog)
     catalog
@@ -13,7 +13,7 @@ class UpdateCatalogService
   CATEGORY_SHOW = [ :id, :title, :description ]
   PRODUCT_SHOW = [ :id, :title, :description, :price ]
 
-  def self.generate_catalog(owner_id)
+  def generate_catalog(owner_id)
     catalog = Owner.includes(categories: :products).find(owner_id)
     catalog.to_json(
       only: OWNER_SHOW, include: {
@@ -23,7 +23,8 @@ class UpdateCatalogService
     })
   end
 
-  def self.publish_catalog(catalog)
+  def publish_catalog(catalog)
+    return if ENV.fetch("RAILS_ENV") == "test"
     sns = Aws::SNS::Client.new
     sns.publish(
       topic_arn: ENV.fetch("AWS_SNS_TOPIC_ARN") { Rails.application.credentials.dig(:aws, :sns, :topic_arn) },

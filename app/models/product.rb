@@ -5,6 +5,6 @@ class Product < ApplicationRecord
   validates :title, presence: true, length: { maximum: 60 }
   validates :price, presence: true, comparison: { greater_than: 0 }
 
-  after_save -> { UpdateCatalogService.call(owner.id) }
-  after_destroy -> { UpdateCatalogService.call(owner.id) }
+  after_save -> { UpdateCatalogJob.perform_async(owner.id) }
+  after_destroy -> { UpdateCatalogJob.perform_async(owner.id) }
 end
