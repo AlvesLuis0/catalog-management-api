@@ -5,4 +5,5 @@ class Category < ApplicationRecord
   validates :title, presence: true, length: { maximum: 60 }
 
   after_save -> { UpdateCatalogService.call(owner_id) }
+  after_destroy -> { UpdateCatalogService.call(owner_id) }
 end

@@ -13,6 +13,7 @@ class Owner < ApplicationRecord
   validates :name, presence: true, length: { maximum: 60 }
 
   after_create -> { UpdateCatalogService.call(id) }
+  after_destroy -> { UpdateCatalogService.call(id) }
 
   def update(attributes)
     super(attributes)
